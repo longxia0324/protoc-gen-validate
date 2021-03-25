@@ -17,21 +17,29 @@ func (m {{ (msgTyp .).Pointer }}) Validate() error {
 			{{ render (context .) }}
 		{{ end }}
 
-		{{ range .OneOfs }}
-			switch m.{{ name . }}.(type) {
-				{{ range .Fields }}
-					case {{ oneof . }}:
-						{{ render (context .) }}
-				{{ end }}
-				{{ if required . }}
-					default:
-						return {{ errname .Message }}{
-							field: "{{ name . }}",
-							reason: "value is required",
-						}
-				{{ end }}
-			}
-		{{ end }}
+		// {{ range .OneOfs }}
+		// {{ if isSp3Optional . }}
+		// 		{{ range .Fields }}
+		// if m.{{ name . }} != nil {
+		// 				{{ render (context .) }}
+		// }
+		// 		{{ end }}		
+		// {{ else }}
+		// 	switch m.{{ name . }}.(type) {
+		// 		{{ range .Fields }}
+		// 			case {{ oneof . }}:
+		// 				{{ render (context .) }}
+		// 		{{ end }}
+		// 		{{ if required . }}
+		// 			default:
+		// 				return {{ errname .Message }}{
+		// 					field: "{{ name . }}",
+		// 					reason: "value is required",
+		// 				}
+		// 		{{ end }}
+		// 	}
+		// {{ end }}
+		// {{ end }}
 
 		return nil
 	{{ end -}}

@@ -37,6 +37,8 @@ func (m *Module) Execute(targets map[string]pgs.File, pkgs map[string]pgs.Packag
 	for _, f := range targets {
 		m.Push(f.Name().String())
 
+		// m.Logf("===> %+v\n", f.Name())
+
 		for _, msg := range f.AllMessages() {
 			m.CheckRules(msg)
 		}
